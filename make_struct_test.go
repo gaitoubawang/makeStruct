@@ -6,23 +6,23 @@ import (
 	"testing"
 )
 
-type OrderList struct {
-	OrderDetails []*OrderDetail `json:"order_details"`
+type orderList struct {
+	OrderDetails []*orderDetail `json:"order_details"`
 	Total        *int           `json:"total"`
 	Meta         []string       `json:"meta"`
 }
 
-type OrderDetail struct {
+type orderDetail struct {
 	ID          string       `json:"id"`
-	Goods       *GoodsDetail `json:"goods"`
-	PaymentInfo PaymentInfo  `json:"payment_info"`
+	Goods       *goodsDetail `json:"goods"`
+	PaymentInfo paymentInfo  `json:"payment_info"`
 }
 
-type GoodsDetail struct {
+type goodsDetail struct {
 	Names []string `json:"names"`
 }
 
-type PaymentInfo struct {
+type paymentInfo struct {
 	PayList []string `json:"pay_list"`
 }
 
@@ -42,11 +42,11 @@ func TestCasesOfMakeStruct(t *testing.T) {
 		{
 			name: "TestCasesOfMakeStruct - normal",
 			args: args{
-				target: &OrderList{},
+				target: &orderList{},
 			},
 			want: want{
-				result: &OrderList{
-					OrderDetails: []*OrderDetail{},
+				result: &orderList{
+					OrderDetails: []*orderDetail{},
 					Total:        &total,
 					Meta:         make([]string, 0),
 				},
@@ -55,8 +55,8 @@ func TestCasesOfMakeStruct(t *testing.T) {
 		{
 			name: "TestCasesOfMakeStruct - had object",
 			args: args{
-				target: &OrderList{
-					OrderDetails: []*OrderDetail{
+				target: &orderList{
+					OrderDetails: []*orderDetail{
 						{
 							ID: "123456",
 						},
@@ -66,14 +66,14 @@ func TestCasesOfMakeStruct(t *testing.T) {
 				},
 			},
 			want: want{
-				result: &OrderList{
-					OrderDetails: []*OrderDetail{
+				result: &orderList{
+					OrderDetails: []*orderDetail{
 						{
 							ID: "123456",
-							Goods: &GoodsDetail{
+							Goods: &goodsDetail{
 								Names: make([]string, 0),
 							},
-							PaymentInfo: PaymentInfo{
+							PaymentInfo: paymentInfo{
 								PayList: make([]string, 0),
 							},
 						},

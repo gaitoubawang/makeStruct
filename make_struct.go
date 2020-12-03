@@ -33,14 +33,14 @@ func MakeStruct(target interface{}) {
 				f.Set(reflect.MakeSlice(reflect.SliceOf(t.Type.Elem()), 0, 0))
 			}
 		case reflect.Struct:
-			//非指针结构体，取出它的地址递归
+			// got the addr of the struct to recursive
 			MakeStruct(rVal.Field(i).Addr().Interface())
 		case reflect.Ptr:
-			//如果为空指针，就new一个新的该类型赋值给它
+			// if it's nil, new value for it
 			if rVal.Field(i).IsNil() {
 				rVal.Field(i).Set(reflect.New(rType.Field(i).Type.Elem()))
 			}
-			//如果真实类型非结构体，那么无需进一步处理
+			// if ptr points the object type is not struct , continue
 			if rType.Field(i).Type.Elem().Kind() != reflect.Struct {
 				continue
 			}
